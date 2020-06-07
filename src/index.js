@@ -7,13 +7,14 @@ init();
 
 function init() {
   try {
-    criarArquivoEstadosCidades();
-  } catch (err) {
-    console.log(err);
+    //createStateWithCitiesFiles();
+    getNumberOfCitiesPerState("AC");
+  } catch (error) {
+    console.log(error);
   }
 }
 
-async function criarArquivoEstadosCidades() {
+async function createStateWithCitiesFiles() {
   const estados = await loadFile("Estados.json");
   const cidades = await loadFile("Cidades.json");
 
@@ -21,18 +22,29 @@ async function criarArquivoEstadosCidades() {
     let data = cidades.filter((cidade) => cidade.Estado === estado.ID);
     try {
       await writeFile(`files/out/${estado.Sigla}.json`, JSON.stringify(data));
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
     }
   });
 }
 
-async function loadFile(fileName) {
+async function getNumberOfCitiesPerState(uf) {
   try {
-    const response = await readFile(path.resolve(`files/in/${fileName}`));
+    const cities = await loadFile(`${uf}.json`, true);
+    console.log(cities.length);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function loadFile(fileName, isOutputFile = false) {
+  try {
+    const response = await readFile(
+      path.resolve(`files/${isOutputFile ? "out" : "in"}/${fileName}`)
+    );
     const data = JSON.parse(response);
     return data;
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
   }
 }
