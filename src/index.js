@@ -13,6 +13,8 @@ async function init() {
     await printTopFiveStatesWithLessCities();
     await printCityWithBiggerNameOfEachState();
     await printCityWithSmallerNameOfEachState();
+    await printCityWithBiggerNameOfAllStates();
+    await printCityWithSmallerNameOfAllStates();
   } catch (error) {
     console.log(error);
   }
@@ -139,6 +141,72 @@ async function printCityWithSmallerNameOfEachState() {
   console.log(citiesWithSmallerNameOfEachState);
 }
 
+async function printCityWithBiggerNameOfAllStates() {
+  const states = await loadFile("Estados.json");
+  let serializedCities = [];
+
+  for (const state of states) {
+    let cities = await loadFile(`${state.Sigla}.json`, true);
+    cities.map((city) => {
+      serializedCities = [
+        ...serializedCities,
+        {
+          name: city.Nome,
+          sizeOfCityName: city.Nome.length,
+          uf: state.Sigla,
+        },
+      ];
+    });
+  }
+
+  serializedCities = serializedCities.sort((a, b) => {
+    if (a.sizeOfCityName > b.sizeOfCityName) return -1;
+    if (a.sizeOfCityName < b.sizeOfCityName) return 1;
+
+    if (a.name > b.name) return 1;
+    if (a.name < b.name) return -1;
+  });
+
+  let cityWithBiggerNameOfAllStates = serializedCities[0];
+
+  console.log(
+    `${cityWithBiggerNameOfAllStates.name} - ${cityWithBiggerNameOfAllStates.uf}`
+  );
+}
+
+async function printCityWithSmallerNameOfAllStates() {
+  const states = await loadFile("Estados.json");
+  let serializedCities = [];
+
+  for (const state of states) {
+    let cities = await loadFile(`${state.Sigla}.json`, true);
+    cities.map((city) => {
+      serializedCities = [
+        ...serializedCities,
+        {
+          name: city.Nome,
+          sizeOfCityName: city.Nome.length,
+          uf: state.Sigla,
+        },
+      ];
+    });
+  }
+
+  serializedCities = serializedCities.sort((a, b) => {
+    if (a.sizeOfCityName > b.sizeOfCityName) return 1;
+    if (a.sizeOfCityName < b.sizeOfCityName) return -1;
+
+    if (a.name > b.name) return 1;
+    if (a.name < b.name) return -1;
+  });
+
+  let cityWithSmallerNameOfAllStates = serializedCities[0];
+
+  console.log(
+    `${cityWithSmallerNameOfAllStates.name} - ${cityWithSmallerNameOfAllStates.uf}`
+  );
+}
+
 async function loadFile(fileName, isOutputFile = false) {
   try {
     const response = await readFile(
@@ -150,4 +218,3 @@ async function loadFile(fileName, isOutputFile = false) {
     console.log(error);
   }
 }
-// teste
