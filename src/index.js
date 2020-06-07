@@ -7,7 +7,7 @@ init();
 
 function init() {
   try {
-    //createStateWithCitiesFiles();
+    createStateWithCitiesFiles();
     getNumberOfCitiesPerState("AC");
   } catch (error) {
     console.log(error);
