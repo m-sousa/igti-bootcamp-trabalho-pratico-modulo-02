@@ -1,0 +1,22 @@
+{
+  "name": "tmp02",
+  "version": "1.0.0",
+  "description": "Trabalho prático do módulo 01 do Bootcamp Online - Desenvolvedor Full Stack do IGTI",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --experimental-modules src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/m-sousa/igti-bootcamp-trabalho-pratico-modulo-02.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/m-sousa/igti-bootcamp-trabalho-pratico-modulo-02/issues"
+  },
+  "homepage": "https://github.com/m-sousa/igti-bootcamp-trabalho-pratico-modulo-02#readme",
+  "dependencies": {}
+}
